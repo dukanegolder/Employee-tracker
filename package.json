@@ -1,7 +1,27 @@
 {
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "Mysql Inquirer CLI app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dukanegolder/Employee-tracker.git"
+  },
+  "keywords": [
+    "Mysql2",
+    "Nodejs"
+  ],
+  "author": "Duke GOlder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dukanegolder/Employee-tracker/issues"
+  },
+  "homepage": "https://github.com/dukanegolder/Employee-tracker#readme",
   "dependencies": {
     "console.table": "^0.10.0",
-    "express": "^4.18.2",
     "inquirer": "^8.2.4",
     "mysql2": "^3.2.0"
   }
