@@ -49,7 +49,7 @@ function mainMenu() {
           addDepartments();
           break;
         case "Add a role":
-          viewRoles();
+          addRole();
           break;
         case "Add an employee":
           addEmployee();
@@ -93,10 +93,47 @@ function viewEmployees() {
   );
 }
 
-// function addDepartments(){
-//   inquire -- departmnename
-//   .then => db.query("insert")
-// }
+function addDepartments() {
+  inquirer
+    .prompt([
+      {
+        name: "departmentName",
+        message: "What department would you like to add?",
+      },
+    ])
+    .then(({ departmentName }) => {
+      db.query(
+        `INSERT INTO department (department_name)
+  VALUES ("${departmentName}");`,
+        function (err, data) {
+          if (err) throw err;
+          console.log(data);
+          mainMenu();
+        }
+      );
+    });
+}
+
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        name: "employeeRole",
+        message: "What new role would you like to add?",
+      },
+    ])
+    .then(({ employeeRole }) => {
+      db.query(
+        `INSERT INTO role (title)
+  VALUES ("${employeeRole}, ");`,
+        function (err, data) {
+          if (err) throw err;
+          console.log(data);
+          mainMenu();
+        }
+      );
+    });
+}
 
 // WHEN I choose to add a department
 // THEN I am prompted to enter the name of the department and that department is added to the database
