@@ -118,14 +118,29 @@ function addRole() {
   inquirer
     .prompt([
       {
-        name: "employeeRole",
-        message: "What new role would you like to add?",
+        name: "newRole",
+        type: "input",
+        message: "What would you like to name the new role?",
+      },
+      {
+        name: "salary",
+        type: "input",
+        message: "What is the salary for the new role?",
+      },
+      {
+        name: "dep",
+        type: "list",
+        message: "Choose the ID of the department to add to",
+        choices: DeptIds(),
       },
     ])
-    .then(({ employeeRole }) => {
+    .then((data) => {
+      console.log(data);
+      let query =
+        "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)";
       db.query(
-        `INSERT INTO role (title)
-  VALUES ("${employeeRole}, ");`,
+        query,
+        [data.newRole, data.salary, data.dep],
         function (err, data) {
           if (err) throw err;
           console.log(data);
@@ -135,8 +150,20 @@ function addRole() {
     });
 }
 
-// WHEN I choose to add a department
-// THEN I am prompted to enter the name of the department and that department is added to the database
+function DeptIds() {
+  const deptIds = [];
+  db.query("SELECT * FROM department", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (let i = 0; i < results.length; i++) {
+        deptIds.push(results[i].id);
+      }
+    }
+  });
+  return deptIds;
+}
+
 // WHEN I choose to add a role
 // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 // WHEN I choose to add an employee
