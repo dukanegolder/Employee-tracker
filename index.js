@@ -29,7 +29,7 @@ function mainMenu() {
           "Add a department",
           "Add a role",
           "Add an employee",
-          "Update an employee role",
+          "Update an employee",
           "Exit",
         ],
       },
@@ -54,8 +54,8 @@ function mainMenu() {
         case "Add an employee":
           addEmployee();
           break;
-        case "Update an employee role":
-          viewEmployeeRoles();
+        case "Update an employee":
+          updateEmployee();
           break;
         default:
           db.end();
@@ -164,9 +164,107 @@ function DeptIds() {
   return deptIds;
 }
 
-// WHEN I choose to add a role
-// THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
-// WHEN I choose to add an employee
-// THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "newEmployeeFirstName",
+        type: "input",
+        message: "What is the new employees first name?",
+      },
+      {
+        name: "newEmployeeLastName",
+        type: "input",
+        message: "What is the new employees last name?",
+      },
+      {
+        name: "employeeRole",
+        type: "list",
+        message: "What is the new employees role?",
+        choices: empRoles(),
+      },
+      {
+        name: "manager",
+        type: "list",
+        message: "Who is the new employees manager?",
+        choices: empManager(),
+      },
+    ])
+    .then((data) => {
+      console.log(data);
+      let query =
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+      db.query(
+        query,
+        [
+          data.newEmployeeFirstName,
+          data.newEmployeeLastName,
+          data.employeeRole,
+          data.manager,
+        ],
+        function (err, data) {
+          if (err) throw err;
+          console.log(data);
+          mainMenu();
+        }
+      );
+    });
+}
+
+function empRoles() {
+  const empRoles = [];
+  db.query("SELECT * FROM role", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (let i = 0; i < results.length; i++) {
+        empRoles.push(results[i].id);
+      }
+    }
+  });
+  return empRoles;
+}
+
+function empManager() {
+  const empManager = [];
+  db.query("SELECT * FROM employee", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (let i = 0; i < results.length; i++) {
+        empManager.push(results[i].id);
+      }
+    }
+  });
+  return empManager;
+}
+
+function updateEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "empUpdate",
+        type: "list",
+        message: "which employees role would you like to update?",
+        choices: viewEmployees(),
+      },
+      {
+        name: "updatedRole",
+        type: "list",
+        message: "What is the employees updated role?",
+        choices: empRoles(),
+      },
+    ])
+    .then((data) => {
+      console.log(data);
+      let query =
+        "UPDATE employee SET (role_id='updatedRole') WHERE (empUpdate)";
+      db.query(query, [data.empUpdate, data.updatedRole], function (err, data) {
+        if (err) throw err;
+        console.log(data);
+        mainMenu();
+      });
+    });
+}
 // WHEN I choose to update an employee role
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
