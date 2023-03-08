@@ -12,13 +12,11 @@ The Employee Tracker is a quick and easy command line database that is created w
 
 [Usage](#usage)
 
+[License](#license)
+
 [Contributors](#contributors)
 
 [Assets](#assets)
-
-[License](#license)
-
-[Questions](#questions)
 
 ## Installation
 
