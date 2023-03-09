@@ -22,19 +22,19 @@ The Employee Tracker is a quick and easy command line database that is created w
 
 Open an integrated terminal in 'index.js' file.
 Run 'npm init' in the terminal.
-Run 'npm i' in the terminal
+Run 'npm i' in the terminal.
 Run 'npm i inquirer@8.2.4' in the terminal.
 Run 'npm i mysql2' in the terminal.
 Run 'npm i console.table' in the terminal.
 
 ## Usage
 
-Run 'mysql -u root -p' on the db folder, then enter your password
-Once in MySQL run 'SOURCE schema.sql;' in the terminal
-Then run 'SOURCE seeds.sql;' in the terminal to seed the database tables with data
-Then type close out the MySQL terminal
-Then open back up an intergrated terminal in 'index.js'
-Then type in 'node server.js' to start the command line database application
+Run 'mysql -u root -p' on the db folder, then enter your password.
+Once in MySQL run 'SOURCE schema.sql;' in the terminal.
+Then run 'SOURCE seeds.sql;' in the terminal to seed the database tables with data.
+Then type close out the MySQL terminal.
+Then open back up an intergrated terminal in 'index.js'.
+Then type in 'node server.js' to start the command line database application.
 
 ## License
 
