@@ -240,31 +240,54 @@ function empManager() {
 }
 
 function updateEmployee() {
-  inquirer
-    .prompt([
-      {
-        name: "empUpdate",
-        type: "list",
-        message: "which employees role would you like to update?",
-        choices: viewEmployees(),
-      },
-      {
-        name: "updatedRole",
-        type: "list",
-        message: "What is the employees updated role?",
-        choices: empRoles(),
-      },
-    ])
-    .then((data) => {
-      console.log(data);
-      let query =
-        "UPDATE employee SET (role_id='updatedRole') WHERE (empUpdate)";
-      db.query(query, [data.empUpdate, data.updatedRole], function (err, data) {
-        if (err) throw err;
-        console.log(data);
-        mainMenu();
-      });
+  viewEmployeeNames().then(([results]) => {
+    const employeeNames = results.map((res) => {
+      return { value: res.id, name: res.first_name };
     });
+    console.log(employeeNames);
+    inquirer
+      .prompt([
+        {
+          name: "empUpdate",
+          type: "list",
+          message: "which employees role would you like to update?",
+          choices: employeeNames,
+        },
+        {
+          name: "updatedRole",
+          type: "list",
+          message: "What is the employees updated role?",
+          choices: empRoles(),
+        },
+      ])
+      .then((data) => {
+        console.log(data);
+        let query = "UPDATE employee SET role_id = ? WHERE id = ?";
+        db.query(
+          query,
+          [data.updatedRole, data.empUpdate],
+          function (err, data) {
+            if (err) throw err;
+            console.log(data);
+            mainMenu();
+          }
+        );
+      });
+  });
+}
+
+function viewEmployeeNames() {
+  // const viewEmployeeNames = [];
+  return db.promise().query("SELECT id, first_name FROM employee"); //(error, results) => {
+  //   if (error) {
+  //     throw error;
+  //   } else {
+  //     for (let i = 0; i < results.length; i++) {
+  //       viewEmployeeNames.push(results[i].first_name);
+  //     }
+  //   }
+  // });
+  // return viewEmployeeNames;
 }
 // WHEN I choose to update an employee role
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
