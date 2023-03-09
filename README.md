@@ -47,3 +47,4 @@ N/A
 ## Assets
 
 The following video contains a sample walkthrough of this project's functionality.
+https://drive.google.com/file/d/1oqinr5NDfUMoFJz-r5NA_VD9TpQN6wkz/view
