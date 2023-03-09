@@ -277,17 +277,5 @@ function updateEmployee() {
 }
 
 function viewEmployeeNames() {
-  // const viewEmployeeNames = [];
-  return db.promise().query("SELECT id, first_name FROM employee"); //(error, results) => {
-  //   if (error) {
-  //     throw error;
-  //   } else {
-  //     for (let i = 0; i < results.length; i++) {
-  //       viewEmployeeNames.push(results[i].first_name);
-  //     }
-  //   }
-  // });
-  // return viewEmployeeNames;
+  return db.promise().query("SELECT id, first_name FROM employee");
 }
-// WHEN I choose to update an employee role
-// THEN I am prompted to select an employee to update and their new role and this information is updated in the database
